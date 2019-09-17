@@ -1,0 +1,43 @@
+
+/*system configuration*/
+.page-content-wrapper .page-content{
+    background-color: transparent; /* #E9F1FF */
+}
+
+.responsive-toggler{
+    border: 3px solid #1caf9a;
+}
+
+.inbox-header .dropdown-menu{
+    left: inherit;
+}
+
+/**search**/
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+    width: 768px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 300px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 300px;
+    }
+}
+.advanced-file-search .form-control{
+    height: 32px;
+    padding: 1px 3px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    color: #642E8B;
+}
+.advanced-file-search .label{
+    margin-top: 2px
+}

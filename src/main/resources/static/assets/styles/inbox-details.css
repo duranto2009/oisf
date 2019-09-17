@@ -1,0 +1,68 @@
+.inbox-header .pull-left{
+    text-align: justify;
+}
+.form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn{
+    width: 350px ;
+}
+
+@media screen and (max-width: 768px) {
+    .form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn{
+        width: 250px ;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        margin-top: -1px;
+        padding: 6px 20px;
+        width: 550px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn{
+        width: 120px ;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        margin-top: -1px;
+        padding: 6px 20px;
+        width: 320px;
+    }
+}
+@media print {
+    .inbox-view-info {
+        clear: both;
+    }
+
+    blockquote > br {
+        display: none;
+        page-break-inside: avoid;
+        page-break-before: avoid;
+        page-break-after: avoid;
+    }
+
+    blockquote > blockquote {
+        margin: 10px;
+        height: auto;
+        border-bottom: none;
+        border-top: none;
+        border-right: none;
+        page-break-before: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+
+    blockquote {
+        page-break-before: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+
+    .inbox-view > blockquote {
+        page-break-before: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+
+    .inbox-view > blockquote a, * {
+        page-break-before: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+}

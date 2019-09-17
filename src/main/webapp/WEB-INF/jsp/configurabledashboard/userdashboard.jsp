@@ -1,0 +1,1013 @@
+<%--<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>--%>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<%--<%@ taglib prefix="html" uri="http://www.springframework.org/tags/form" %>--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <%@ include file="../includes/head.jsp" %>
+    <c:set var="context" value="${pageContext.request.contextPath}"/>
+
+
+    <style type="text/css">
+
+
+        .dashboard-stat ul li {
+            /*margin-left: -20px;*/
+            list-style-type: square;
+            color: white;
+        }
+
+        .portlet:not(.light):not(.box):not(.solid) {
+            padding: 0px;
+        }
+
+        .checkbox {
+            margin: 15px !important;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        #sortable_portlets {
+            background-color: white;
+            margin: 15px;
+            padding: 15px;
+            margin-top: 0px;
+            margin-left: 20px;
+        }
+
+        #column1 {
+            width: 24%;
+            margin-left: 3px;
+            padding: 0px;
+        }
+
+        #column2 {
+            width: 24%;
+            margin-left: 6px;
+            padding: 0px;
+        }
+
+        #column3 {
+            width: 24%;
+            margin-left: 6px;
+            padding: 0px;
+        }
+
+        #column4 {
+            width: 24%;
+            margin-left: 6px;
+            padding: 0px;
+        }lo
+
+        .row {
+            /*margin-top: 13px;*/
+            margin-bottom: 13px;
+            margin-left: 0px;
+            margin-right: 0px;
+            /*margin-left:10px;*/
+        }
+
+        .appmodules {
+            width: 34%;
+            padding: 10px;
+            height: 120px;
+        }
+
+        .dashboadicon {
+            width: 100%;
+            height: 120px;
+            /*
+            height:140px;
+            width:250px;
+            margin-top: -10px;
+            margin-left: -5px;
+            */
+            background-color: white;
+        }
+
+        .dashboard-stat .footer {
+            padding-left: 15px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-bottom: 5px;
+        }
+
+        .portlet > .portlet-title {
+            min-height: 0px;
+        }
+
+        .col-md-8 {
+            width: 60%;
+        }
+
+        .sso-logo {
+            font-size: 12px;
+        }
+
+        /*start: added by forhad*/
+        .modal-header {
+            background-color: #9fea3c !important;
+        }
+        #sortable_portlets img:hover{
+            cursor: pointer;
+        }
+        /*end: added by forhad*/
+
+    </style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-footer-fixed">
+<!-- BEGIN HEADER -->
+<div class="page-header -i navbar navbar-fixed-top">
+    <%@ include file="../includes/header.jsp" %>
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container" style="height: 100%">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper" style="margin-top: 20px">
+        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+        <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+        <div class="page-sidebar navbar-collapse collapse">
+            <%@ include file="../includes/menu.jsp" %>
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+
+        <div class="page-content">
+
+            <div id="savediv" class="row" style="margin: 0px 50px 25px 50px">
+                <button id="dashboardsave" type="button" class="btn red pull-right">Save</button>
+            </div>
+
+
+            <div class="row" id="sortable_portlets">
+
+
+                <div id="column1" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 column sortable">
+                    <div class="portlet portlet-sortable-empty" style="height: 115px;"></div>
+                </div>
+                <div id="column2" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 column sortable">
+                    <div class="portlet portlet-sortable-empty" style="height: 115px;"></div>
+                </div>
+                <div id="column3" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 column sortable">
+                    <div class="portlet portlet-sortable-empty" style="height: 115px;"></div>
+                </div>
+                <div id="column4" class="col-lg-3 col-md-3 col-sm-6 col-xs-12 column sortable">
+                    <div class="portlet portlet-sortable-empty" style="height: 115px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT BODY -->
+        <div id="app" class="dashboard-stat  portlet portlet-sortable"
+             style="display: none;box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.22)">
+            <div class="portlet-title ui-sortable-handle">
+
+                <button type="button" class="closePortlet pull-right" id="delete"
+                        style=" background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;
+                        overflow: hidden;outline:none;">
+                    <i class="fa fa-times" aria-hidden="true" style="color:white"></i>
+                </button>
+
+            </div>
+
+            <div class="row" style="min-height: 55px;">
+                <div class="col-md-8">
+                    <img class="dashboadicon sso-logo" style="" src="" alt="HTML5 Icon">
+                </div>
+
+                <div class="col-md-3 appmodules">
+
+                    <ul style="margin-left: -20px">
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="more footer portlet-title ui-sortable-handle"
+                 style="color: rgb(255, 255, 255);opacity: 1;text-transform: none;font-size: 13px;font-weight: 400;"
+                 href="javascript:void(0);">
+
+
+                <button type="button" class="closePortlet pull-right " id="settings"
+                        style=" background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;">
+
+                    <%--<a data-toggle="modal" href="#responsive">--%>
+                    <i class="fa fa-cog" aria-hidden="true" style="color:white"></i>
+                    <%--</a>--%>
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <%--hidden portlet--%>
+    <!-- /.modal -->
+    <%--<div id="responsive" class="modal fade" tabindex="-1" aria-hidden="true">--%>
+    <%--<div class="modal-dialog">--%>
+    <%--<div class="modal-content">--%>
+    <%--<div class="modal-header">--%>
+    <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>--%>
+    <%--<h4 class="modal-title">Responsive & Scrollable</h4>--%>
+    <%--</div>--%>
+    <%--<div class="modal-body">--%>
+    <%--<div class="scroller" style="height:300px" data-always-visible="1" data-rail-visible1="1">--%>
+    <%--<div class="row">--%>
+    <%--<div class="col-md-6">--%>
+    <%--<h4>Some Input</h4>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--</div>--%>
+    <%--<div class="col-md-6">--%>
+    <%--<h4>Some More Input</h4>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--<p>--%>
+    <%--<input type="text" class="col-md-12 form-control"></p>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="modal-footer">--%>
+    <%--<button type="button" data-dismiss="modal" class="btn dark btn-outline">Close</button>--%>
+    <%--<button type="button" class="btn green">Save changes</button>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+
+
+    <!-- END CONTENT -->
+</div>
+<form action="" method="post" id="dashboardlogin" target="_blank">
+    <input type="hidden" name="appid" id="appid" value="">
+    <input type="hidden" name="token" id="token" vlue="">
+</form>
+<!-- BEGIN FOOTER -->
+<div class="page-footer" style="position: fixed;width: 100%">
+    <%@ include file="../includes/footer.jsp" %>
+</div>
+<%@ include file="../includes/includes.jsp" %>
+
+<script src="${context}/assets/js/AnimationPractice.js" type="text/javascript"></script>
+<script src="${context}/assets/js/menu.js" type="text/javascript"></script>
+<script src="${context}/assets/pages/scripts/portlet-draggable.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="${context}/assets/global/plugins/bootbox/bootbox.min.js"></script>
+<script type="text/javascript" src="${context}/assets/pages/scripts/ui-bootbox.min.js"></script>
+
+<script th:inline="javascript">
+    var postLink;
+
+    function loginWithToken(token) {
+        $("#token").val(token.trim());
+        //$("#oisfForm").attr("action","http://162.222.186.235/billing/oisf/testOisf.jsp");
+        //$("#oisfForm").attr("action","http://localhost/projapoti_framework/login");
+        $("#oisfForm").attr("action", postLink);
+        $("#oisfForm").submit();
+    }
+
+    $(document).ready(function () {
+        $(".link").click(
+            function () {
+                postLink = $(this).attr("data-id");
+                searchText($(this).attr("data-id"));
+            }
+        )
+
+    });
+
+</script>
+
+<!-- END THEME LAYOUT SCRIPTS -->
+
+<script>
+    var bool = 0;
+    var colorPattern;
+    var initialstate;
+    var deleteditem = [];
+
+    function showSettingsModal(res, id) {
+        console.log("============== response   + ID ================");
+        console.log(res + " : " + id);
+        var options = [
+            {value: '#', text: 'Choose one'},
+            {value: 1, text: 'Vim'},
+            {value: 2, text: 'Sublime Text'},
+            {value: 3, text: 'WebStorm/PhpStorm'},
+            {value: 4, text: 'Komodo IDE'},
+            {value: 5, text: 'Other'}
+        ];
+
+        var arr = [];
+        var len = res.length;
+//        arr.push({
+//            value: '#',
+//            text: 'Choose one'
+//        });
+        for (var i = 0; i < len; i++) {
+            arr.push({
+                value: res[i].id,
+                text: res[i].nameBng
+            });
+        }
+        console.log("=========== arr ============\n");//")
+        console.log(arr);
+        console.log("=========== options ============\n");//")
+        console.log(options);
+
+
+//        getting the options selected previously by user
+        var selected;
+        $.ajax({
+            type: "POST",
+            url: "${context}/dashitemmodalbyorgid",
+            data: {
+                modalId: id
+            },
+            async: false,
+            success: function (response) {
+                console.log("===!!!! GET MODULE ID BY USER !!!! ========");
+                console.log(response);
+                selected = response;
+//                showSettingsModal(response);
+
+            },
+            error: function () {
+                 toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+            }
+        });
+
+        console.log("=========== SELECTED ====================");
+        console.log(selected);
+
+        bootbox.prompt({
+            title: "<div style='color: white'>Select Modules</div> ",
+            size: "small",
+            value: selected,
+            inputType: "checkbox",
+            inputOptions: arr,
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times "></i> Cancel',
+                    className: 'btn-danger'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check "></i> Confirm',
+                    className: 'btn-success'
+                }
+            },
+            callback: function (result) {
+                showResult(result);
+            }
+        });
+
+        function showResult(result) {
+            if (typeof result !== "undefined" && result !== null) {
+                console.log("============= result ============= ");
+                console.log(result);
+                if (result.length > 2 || result.length == 0) {
+                    alert("Please Choose At Most 2 Options.")
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: "${context}/savedashitem",
+                        data: {
+                            id: result,
+                            modalId: id
+                        },
+                        async: false,
+                        success: function (response) {
+//                            createDashBoard(response);
+                            console.log("=========================================");
+                            console.log(response);
+                            console.log("=========================================");
+                        },
+                        error: function () {
+                             toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+                        }
+                    });
+
+//                    alert(result);
+                    location.reload(true);
+                }
+            }
+        }
+    }
+
+    function showModal(appid) {
+        var idpart = appid.split("_");
+        var actualid = parseInt(idpart[1]);
+        bootbox.confirm({
+            message: '<p class="text-center">Do you want to delete</p>',
+            title: "<div style='color: white'>প্লেয়াসে </div> ",
+            size: "small",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+
+                if (result == true) {
+                    $('#savediv').show();
+                    deleteditem.push(actualid);
+                    $("#" + appid).remove();
+                    $('.modal.in .modal-dialog').hide();
+                    $(".modal.in .modal-dialog .btn").off("click");
+
+                } else {
+                    $('#savediv').hide();
+                    $('.modal.in .modal-dialog').hide();
+                    $(".modal.in .modal-dialog .btn").off("click");
+                }
+
+            }
+        });
+
+    }
+
+    function getChild(child, id, appName) {
+
+
+        console.log("============ CHILD ============ ");
+        console.log(child);
+        console.log("============ ID =============== ");
+        console.log(id);
+        console.log("==================APP NAME ================== ");
+        console.log(appName);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //        getting the options selected previously by user
+        var selected;
+        $.ajax({
+            type: "POST",
+            url: "${context}/dashitemmodalbyorgid",
+            data: {
+                modalId: id
+            },
+            async: false,
+            success: function (response) {
+                console.log("===!!!! GET MODULE ID BY USER !!!! ========");
+                console.log(response);
+                selected = response;
+//                showSettingsModal(response);
+
+            },
+            error: function () {
+                 toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+            }
+        });
+
+        var s = "";
+        for (i = 0; i < child.length; i++) {
+            var url = child[i].url, nameBng = child[i].nameBng;
+            if (selected.includes(child[i].id))
+                s += "<li><a class='sso-logo' data-appName='" + appName + "' data-landing-page-url='" + url + "' href='#' style=\"color:white;text-decoration:none;\">" + nameBng + "</a></li>\n";
+        }
+        return s;
+    }
+
+    /*function createPortlet(url, namebng, iconurl,children) {
+        alert("inside create portlet ");
+        var port="<div class=\"portlet  portlet-sortable\"  style=\"display: block; height: 130px;\">\n" +
+            "                            <div class=\"portlet-title ui-sortable-handle details detailsextra\">\n" +
+            "                                <div class=\"caption\" style=\"float:inherit;font-size: large ;color: white\">\n" +
+            "                                    <i class=\"fa fa-anchor\" aria-hidden=\"true\" style=\"color: red\"></i>\n" +
+            "                                    <a href=\""+url+"\" target=\"_blank\" style=\"color: white\">"+namebng+"</a>\n" +
+            "                                </div>\n" +
+            "\n" +
+            "                            </div>\n" +
+            "                            <div class=\"portlet-body\">\n" +
+            "                                <div class=\"row\">\n" +
+            "                                    <div class=\"col-md-6\">\n" +
+            "                                        <div class=\"\">\n" +
+            "                                            <img class=\"dashboadicon\" src=\""+iconurl+"\"\n" +
+            "                                                 alt=\"HTML5 Icon\" style=\"margin-bottom: 15px\">\n" +
+            "                                        </div>\n" +
+            "\n" +
+            "                                    </div>\n" +
+            "                                    <div class=\"col-md-6\">\n" +
+            "                                        <%--<h6>Modules</h6>--%>\n" +
+            "                                        <ul style=\"margin-top: -10px;margin-left: -20px\">\n" +getChild(children) +
+            "                                        </ul>\n" +
+            "                                    </div>\n" +
+            "                                </div>\n" +
+            "\n" +
+            "                                <div class=\"row\" style=\"margin-left: -10px;margin-right: -10px;\">\n" +
+            "                                <div class=\"row\" style=\"margin-left: -10px;margin-right: -10px;\">\n" +
+            "                                    <div class=\"col-md-12\" style=\" color: #ffffff; opacity: 1;\n" +
+            "\">\n" +
+            "                                        <a style=\"color:#ffffff\"> View more\n" +
+            "                                            <i class=\"m-icon-swapright m-icon-white\" style=\"float: right\"></i>\n" +
+            "                                        </a>\n" +
+            "                                    </div>\n" +
+            "                                </div>\n" +
+            "\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "\n" ;
+
+        return port;
+    }*/
+    // Create the logo in dashboard
+    function createPortletFromTemplate(id, url, namebng, iconurl, children, appName, defaultPage) {
+        var genportlet = $("#app").clone();
+        var applink = $("div > a", genportlet);
+        var appicon = $("div>div>img", genportlet);
+        var appmodule = $("div>ul", genportlet);
+        var footer = $(".footer", genportlet);
+
+        footer.append(namebng);
+
+        genportlet.css("display", "block");
+        genportlet.attr("id", "app_" + id);
+        // logos urls
+        applink.prop("href", url);
+        applink.attr("class", "sso-logo");
+        applink.attr("style", "height:40px;color:white;text-decoration:none;");
+        applink.attr("data-appname", appName);
+        applink.attr("data-landing-page-url", defaultPage);
+        //applink.text(namebng);
+        applink.text("");
+
+        appicon.attr("src", iconurl);
+        appicon.attr("data-landing-page-url", defaultPage);
+        appicon.attr("data-appname", appName);
+        appicon.attr("data-landing-page-url","dashboard");
+        appmodule.append(getChild(children, id, appName));
+        return genportlet;
+    }
+
+    function createDashBoard(data) {
+        var column = ["#column1", "#column2", "#column3", "#column4"];
+        initialstate = [];
+        console.log(" inside create dash board ");
+        console.log(data);
+
+        for (j = 0; j < data.length; j++) {
+            var s = createPortletFromTemplate(data[j].id + "", data[j].url, data[j].nameBng, data[j].logoUrl, data[j].child, data[j].nameEng, data[j].defaultPage);
+            var id = column[data[j].columnId - 1] + " .portlet-sortable-empty";
+            var ele = $(id);
+            ele.before(s);
+
+            var key = "app_" + data[j].id;
+            initialstate[key] = {
+                row: data[j].rowId,
+                column: data[j].columnId
+            };
+        }
+    }
+
+    function create2DArray(rows) {
+        var arr = [];
+
+        for (var i = 0; i < rows; i++) {
+            arr[i] = [];
+        }
+
+        return arr;
+    }
+
+    function getColor() {
+        var color, scolor;
+        if (bool == 1) {
+            color = "#693293";
+            scolor = "#7F51A3", bool = 0
+        }
+        else {
+            color = "#8CC63E";
+            scolor = "#9DCE5B";
+            bool = 1;
+        }
+
+        var C = {
+            c: color,
+            s: scolor
+        };
+        return C;
+    }
+
+    function createColorPattern() {
+        colorPattern = create2DArray(100);
+        for (row = 0; row < 100; row++) {
+            bool = 1 - bool;
+            for (column = 0; column < 4; column++) {
+
+                colorPattern[row][column] = getColor();
+            }
+        }
+    }
+
+    function colorRefresh() {
+        var s = $('#sortable_portlets .portlet-sortable');
+        bool = 1;
+
+        s.each(function () {
+            var pp = $(this).parent();
+            var bf = $(this).prevUntil(pp);
+            var r = bf.length;
+            var c = parseInt(pp[0].id.slice(-1)) - 1;
+            color = colorPattern[r][c];
+            $(this).css("background-color", color.c);
+            $('.more', this).css("background-color", color.s);
+            $(".appmodules", this).css("background-color", color.s);
+
+        });
+    }
+
+    $(document).ready(function () {
+
+            var orgID = $('#orgId').val();
+
+            $('#savediv').hide();
+
+            createColorPattern();
+
+            $.ajax({
+                type: "POST",
+                url: "${context}/dashitem",
+                data: {
+                    id: orgID
+                },
+                async: false,
+                success: function (response) {
+                    createDashBoard(response);
+                    console.log(initialstate);
+                },
+                error: function () {
+                     toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+                }
+            });
+
+            $('#sortable_portlets').sortable({
+                scroll: true,
+                scrollSensitivity: 100,
+                scrollSpeed: 100,
+                update: function () {
+                    colorRefresh();
+                    $('#savediv').show();
+                }
+
+            });
+
+            $("#application ul li").draggable({
+                    helper: 'clone'
+                }
+            );
+
+
+            $('#sortable_portlets').droppable(
+                {
+                    accept: '#application ul li',
+                    drop: function (ev, ui) {
+                        var droppedItem = $(ui.draggable).clone();
+                        var id = droppedItem[0].id;
+                        var list = $("#sortable_portlets");
+                        var check = $("#app_" + id, list);
+                        if (check.length == 0) {
+
+                            $('#savediv').show();
+                            deleteditem = jQuery.grep(deleteditem, function (value) {
+                                return value != id;
+                            });
+                            var url = droppedItem[0].firstElementChild.href,
+                                nameBng = droppedItem[0].firstElementChild.innerText, logoUrl = droppedItem.attr("icon"),
+                                child = [],
+                                childArray = [];
+                            child = $('#' + id + ' ul').children();
+                            var yes = false;
+                            child.each(function (value, current_element) {
+                                if (yes) {
+                                    var url = current_element.firstElementChild.href,
+                                        nameBng = current_element.firstElementChild.innerText;
+                                    childArray.push({
+                                        url: url,
+                                        nameBng: nameBng
+                                    })
+                                }
+                                else yes = true;
+
+                            });
+                            var pos = ui.draggable.offset(), dPos = $(this).offset();
+                            var width = list.width();
+                            var column = Math.floor((ev.pageX - list.parent().offset().left) / (width * .33)) + 1;
+
+//                        dynamically list selection
+
+
+                            var s = createPortletFromTemplate(id, url, nameBng, logoUrl, childArray, "");
+                            var ele = $("#column" + column + " > .portlet-sortable-empty");
+                            ele.before(s);
+                            colorRefresh();
+                        }
+                        else {
+                           // alert("app already exist");
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "positionClass": "toast-bottom-right"
+                            };
+                            toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+
+                        }
+                    }
+                }
+            );
+
+            colorRefresh();
+
+            $("#dashboardsave").click(function () {
+                $('#savediv').hide();
+                var changeditem = [];
+                var createditem = [];
+                var s = $('#sortable_portlets .portlet-sortable');
+
+                s.each(function () {
+
+                    var pp = $(this).parent();
+                    var bf = $(this).prevUntil(pp);
+                    var r = bf.length;
+                    var c = parseInt(pp[0].id.slice(-1)) - 1;
+
+                    var app = initialstate[this.id];
+                    var idpart = this.id.split("_");
+                    var actualid = parseInt(idpart[1]);
+                    if ($.isEmptyObject(app)) createditem.push({
+                        id: actualid,
+                        row: r + 1,
+                        column: c + 1
+                    });
+                    else {
+                        if (!((app.row == r + 1) && (app.column == c + 1))) {
+                            changeditem.push({
+                                id: actualid,
+                                row: r + 1,
+                                column: c + 1
+                            });
+                        }
+                    }
+
+
+                });
+
+                //post change list and deleted list
+                var data = {
+                    "updated": changeditem,
+                    "created": createditem,
+                    "deleted": deleteditem,
+                    "desid": orgID
+                };
+
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "${context}/savedashboard",
+                    data: JSON.stringify(data),
+                    async: false,
+                    success: function (response) {
+                        var s = $('#sortable_portlets .portlet-sortable');
+                        initialstate = [];
+                        s.each(function () {
+
+                            var pp = $(this).parent();
+                            var bf = $(this).prevUntil(pp);
+                            var r = bf.length;
+                            var c = parseInt(pp[0].id.slice(-1)) - 1;
+                            var idpart = this.id;
+                            initialstate[idpart] = {
+                                row: r + 1,
+                                column: c + 1
+                            };
+                        });
+                    },
+                    error: function () {
+                         toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+                    }
+                });
+
+
+            });
+
+            $("#sortable_portlets").on('click', "#delete", function (e) {
+                var app = $(this).parents(".portlet-sortable");
+                var id = app[0].id;
+                showModal(id);
+            });
+
+//             $("#sortable_portlets").on('click', ".portlet-sortable > .portlet-title> .closePortlet", function (e) {
+//                 var app = $(this).parents(".portlet-sortable");
+//                 var id = app[0].id;
+// //            alert(id);
+//                 showModal(id);
+//             });
+            <%--$("#sortable_portlets").on('click', "#settings", function (e) {--%>
+
+            <%--var app = $(this).parents(".portlet-sortable");--%>
+            <%--var id = app[0].id;--%>
+            <%--id = id.replace(/[^\d.]/g, '');--%>
+            <%--//            alert(id);--%>
+            <%--$.ajax({--%>
+            <%--type: "POST",--%>
+            <%--url: "${context}/dashitemmodal",--%>
+            <%--data: {--%>
+            <%--id: id--%>
+            <%--},--%>
+            <%--async: false,--%>
+            <%--success: function (response) {--%>
+            <%--console.log(response);--%>
+            <%--showSettingsModal(response, id);--%>
+
+            <%--},--%>
+            <%--error: function () {--%>
+            <%-- toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");--%>
+            <%--}--%>
+            <%--});--%>
+
+            <%--});--%>
+
+
+            $("#sortable_portlets").on('click', "#settings", function (e) {
+
+                var app = $(this).parents(".portlet-sortable");
+                var id = app[0].id;
+                id = id.replace(/[^\d.]/g, '');
+//            alert(id);
+                $.ajax({
+                    type: "POST",
+                    url: "<%=request.getContextPath()%>/dashitemmodal",
+                    data: {
+                        id: id
+                    },
+                    async: false,
+                    success: function (response) {
+                        console.log(response);
+                        showSettingsModal(response, id);
+
+                    },
+                    error: function () {
+                         toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.error(" সমস্যা হয়েছে, পুনরায় চেষ্টা করুন । ");
+                    }
+                });
+
+            });
+
+
+            var postLink;
+
+            function loginWithToken(token) {
+                $("#token").val(token.trim());
+                //$("#oisfForm").attr("action","http://162.222.186.235/billing/oisf/testOisf.jsp");
+                //$("#oisfForm").attr("action","http://localhost/projapoti_framework/login");
+                $("#oisfForm").attr("action", postLink);
+                $("#oisfForm").submit();
+            }
+
+        }
+    );
+
+</script>
+<style>
+    .image {
+        width: 80px;
+        height: 80px;
+        display: block;
+        float: left;
+        padding-top: 10px;
+        padding-left: 15px;
+        margin-bottom: 15px;
+        font-size: 35px;
+        line-height: 35px;
+    }
+
+    #throbble {
+        display: none
+    }
+</style>
+<%--<script type="text/javascript" src="http://103.48.18.28/sso/lib/script_local.js"></script>--%>
+<%--<script type="text/javascript">--%>
+    <%--$(document).ready(function () {--%>
+        <%--$('body').show();--%>
+
+        <%--widget.init(--%>
+            <%--{--%>
+                <%--"ajaxUrl": "/iALoginReqInfoAjax",--%>
+                <%--"widgetColor": "light",--%>
+                <%--"widgetSize": "20px"--%>
+            <%--}--%>
+        <%--);--%>
+    <%--});--%>
+<%--</script>--%>
+
+<!--script type="text/javascript" src="http://103.48.18.28/sso/lib/script.js"></script-->
+<script type="text/javascript" src="http://idp.doptor.gov.bd/sso/lib/script.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('body').show();
+
+        widget.init({
+            "widgetColor": "light",
+            "widgetSize": "20px",
+            "appPermissionURL": "/oisf/sso/user/apps"
+        });
+
+        http://103.48.18.21:8081/
+            $('.sso-logo').click(function () {
+//            console.log($(this));
+//            console.log($(this).attr('href'));
+                var href = $(this).attr('href');
+                if (href != undefined) {
+                    if (href.indexOf('http://') >= 0) window.location.replace(href);
+                    else window.location.replace('http://' + href);
+                }
+            });
+    });
+</script>
+
+
+</body>
+
+</html>

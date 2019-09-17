@@ -1,0 +1,240 @@
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
+
+.roboto {
+    font-family: "Roboto";
+}
+.roboto-c {
+    font-family: "Roboto Condensed";
+}
+
+
+.fw-100 { font-weight: 100; }
+.fw-300 { font-weight: 300; }
+.fw-400 { font-weight: 400; }
+.fw-500 { font-weight: 500; }
+.fw-700 { font-weight: 700; }
+.fw-900 { font-weight: 900; }
+
+
+header div img {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    max-width: 1160px;
+}
+header {
+    position: absolute;
+    top: 72px;
+    width: 100%;
+    height: 150px;
+}
+
+#mainNav {
+    height: 74px;
+    position: fixed;
+    background-color: #fff;
+    max-height: 74px;
+}
+
+.carousel-item {
+    height: 100%;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+
+* {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+a {
+    color: black !important;
+}
+
+section {
+    padding: 2rem !important;
+}
+
+#contact {
+    padding: 0px !important;
+    padding-top: 5px !important;
+}
+
+.light {
+    border-color: black !important;
+}
+
+
+p {
+    color: #404040;
+    /*font-weight: 300!important;*/
+    font-size: 15px;
+    margin: 0px;
+}
+
+li {
+    color: #404040;
+}
+li a{
+    color: #404040 !important;
+}
+
+b, strong {
+    font-weight: lighter;
+}
+
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active, #mainNav .navbar-nav>li.nav-item>a.nav-link:focus.active{
+    color: #404040!important;
+}
+
+
+.search-container {
+    float: right;
+}
+
+.search-container input[type=text] {
+    width: 250px;
+    height: 30%;
+    padding: 6px;
+    font-size: 17px;
+    border: none;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+
+.search-container input[type=text]:focus, .search-container button:focus {
+    outline: none;
+}
+
+.search-container button {
+    background: transparent;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    color: slategrey;
+}
+
+.search-container button:hover {
+    background: #ccc;
+}
+
+
+@media (min-width: 800px) {
+    #aboutrow {
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    #abouttext {
+        width: 45%;
+
+    }
+
+    #slider {
+        width: 44.4%;
+    }
+}
+
+@media (max-width: 800px) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Roboto Condensed', sans-serif !important;
+        color: #404040;
+        border: none !important;
+        font-weight: lighter !important;
+        font-size: 20px;
+    }
+
+    #aboutrow {
+        display: block;
+        height: 100%;
+    }
+
+    #abouttext {
+        display: block;
+
+    }
+
+    #slider {
+        display: block;
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    #standrardcontent > div > div {
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 900px) {
+    .customcontainer{
+        min-width: 92%;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+}
+
+
+body{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.middlecontainer {
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    margin-bottom: 20px;
+}
+
+.middle {
+    background: transparent;
+    align-self: center;
+    padding: 0rem;
+}
+
+td {
+    word-wrap: break-word;
+    min-width: 100px;
+    min-height: fit-content;
+}
+
+/*.table-fit {*/
+/*height: 1px;*/
+/*}*/
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(1, 0, 1, .03);
+}
+
+#keypoints {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #e3ebe3;
+    position: relative;
+    right: 0;
+    float: right;
+    width: 300px;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 5px 5px 5px 10px;
+    border: solid 1px #779977;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+

@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 1, 2015, 9:13:38 AM
+    TSL
+ *  Team Bijoy
+
+*/
+
+.mailmenu{
+    padding-left: 10px;
+}
+
+.mailmenu li a,.mailmenu li a:hover, .mailmenu li a:focus, .mailmenu li a:active{
+    cursor: pointer;
+    background: transparent;
+}
+
+.EmailBody{
+    min-height: 100px;
+}
+
+.newCompose{
+    cursor: pointer;
+}
+
+.form-control{
+    margin-bottom: 5px !important;
+}
+

@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 17, 2016, 11:34:05 PM
+    Author     : iftekhareather
+*/
+
+*{
+    font-family: "Nikosh", sans-serif, "Open Sans";
+}
+
+#sovapoti_signature, #sender_signature, #sender_signature2, #sender_signature3{
+    visibility: hidden;
+    height: 50px!important;
+}
+
+#potrodraft_list #sovapoti_signature, #potrodraft_list #sender_signature, #potrodraft_list #sender_signature2, #potrodraft_list #sender_signature3{
+    visibility: hidden;
+    height: 50px!important;
+}
+
+.bangladate{
+    border-bottom: 1px solid #000!important;
+}
+
+.dakBodyPotro{
+    width: 8in!important;
+    page-break-inside: auto!important;
+    border:none!important;
+    overflow: visible!important;
+}
+
+.dakBodyPotro #sovapoti_signature,.dakBodyPotro #sender_signature,.dakBodyPotro #sender_signature2, .dakBodyPotro #sender_signature3,.dakBodyPotro #sender_signature4{
+    visibility: visible!important;
+    height: 50px!important;
+    max-width: 150px!important;
+    height: 50px!important;
+    
+}
+
+
+#sovapoti_signature img, #sender_signature img, #sender_signature2 img, #sender_signature3 img
+,#sender_signature4 img,#sender_signature5 img{
+    height: 50px!important;
+}

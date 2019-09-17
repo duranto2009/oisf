@@ -1,0 +1,468 @@
+$(document).ready(function () {
+
+    $('#citydropdown').hide();
+    $('#citywarddropdown').hide();
+    $('#municipalitydropdown').hide();
+    $('#wardhide').hide();
+    $('#upacitygroup').hide();
+    $('#unionmunidiv').hide();
+
+     $('#forhide').hide();
+
+
+    $('#ministrydropdown').change(function () {
+        var data = "";
+        $.ajax({
+            type: "POST",
+            url: "/layersbyministries",
+            data: {
+                ministryId: $(this).val()
+            },
+            async: false,
+            success: function (response) {
+                data = response;
+                return response;
+            },
+            error: function () {
+                var select = $('#layerdropdown')
+                select.empty();
+                select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+            }
+        });
+
+        var select = $('#layerdropdown');
+        select.empty();
+        select.append($('<option></option>').val(-1).html('...'));
+        $.each(data, function (index, value) {
+            select.append(
+                $('<option></option>').val(value.id).html(value.layerNameBng).attr('layer', value.layerLevel)
+            );
+        });
+
+//            var selected = $(this).find('option:selected');
+//            var extra = selected.data('bbs');
+//            $('input[name = divisionbbscode]').val(extra);
+
+    });
+
+    $('#layerdropdown').change(function () {
+        var data = "";
+        $.ajax({
+            type: "POST",
+            url: "/originsbylayers",
+            data: {
+                layersId: $(this).val()
+            },
+            async: false,
+            success: function (response) {
+                data = response;
+                return response;
+            },
+            error: function () {
+                var select = $('#origindropdown')
+                select.empty();
+                select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+            }
+        });
+
+        var select = $('#origindropdown');
+        select.empty();
+        select.append($('<option></option>').val(-1).html('...'));
+        $.each(data, function (index, value) {
+            select.append(
+                $('<option></option>').val(value.id).html(value.officeNameBng).attr('layer', value.officeLevel)
+            );
+        });
+
+//            var selected = $(this).find('option:selected');
+//            var extra = selected.data('bbs');
+//            $('input[name = divisionbbscode]').val(extra);
+
+    });
+
+    $('#divisiondropdown').change(function () {
+        var data = "";
+        $.ajax({
+            type: "POST",
+            url: "/districtlistbydiv",
+            data: {
+                id: $(this).val()
+            },
+            async: false,
+            success: function (response) {
+                data = response;
+                return response;
+            },
+            error: function () {
+                var select = $('#districtdropdown');
+                select.empty();
+                select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+            }
+        });
+
+        var select = $('#districtdropdown');
+        select.empty();
+        select.append($('<option></option>').val(-1).html('...'));
+        $.each(data, function (index, value) {
+            select.append(
+                $('<option></option>').val(value.id).html(value.districtNameBng).attr('bbs', value.bbsCode)
+            );
+        });
+
+        var selected = $(this).find('option:selected');
+        var extra = selected.data('bbs');
+        $('input[name = divisionbbscode]').val(extra);
+
+    });
+
+
+    function dis() {
+
+        var selectedVal = $("#upacity input:radio:checked").val();
+
+        var disid = $('#districtdropdown').val();
+        var h = $('#forhide');
+
+        if (1 == selectedVal) {
+
+            $.ajax({
+                type: "POST",
+                url: "/upazillalistbydistrictid",
+                data: {
+                    id: disid
+                },
+                async: false,
+                success: function (response) {
+                    data = response;
+                    return response;
+                },
+                error: function () {
+                    var select = $('#upazilladropdown');
+                    select.empty();
+                    select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+                }
+            });
+
+            h.show();
+
+            $('#unionmunidiv').hide();
+            $('#upacitygroup').show();
+
+            $('#citydropdown').hide();
+            $('#upazilladropdown').show();
+
+
+            var lebel = $('#uplebel');
+            var unimuni = $('#uniminiward')
+            unimuni.empty();
+
+            var radio = $('<input/>').attr({
+                type: 'radio', name: 'radio', value: '1', id: 'union'
+            });
+            unimuni.append(radio);
+            unimuni.append(' ইউনিয়ন ');
+
+            var muni = $('<input/>').attr({
+                type: 'radio', name: 'radio', value: '2', id: 'muni'
+            });
+
+            unimuni.append(' ');
+
+            unimuni.append(muni);
+            unimuni.append(' পৌরসভা ');
+
+
+            lebel.empty();
+            lebel.append().html("উপজেলা নির্বাচন");
+            var unimunilebel = $('#unimunilebel')
+
+            unimunilebel.empty()
+            unimunilebel.append('ঊপজেলার বিভক্তির ধরন');
+            var select = $('#upazilladropdown');
+
+            $('#unionmunidiv').show();
+            select.empty();
+            select.append($('<option></option>').val(-1).html('যে কোনও একটি'));
+            $.each(data, function (index, value) {
+                select.append(
+                    $('<option></option>').val(value.id).html(value.upazillaNameBng).attr('bbs', value.bbsCode)
+                );
+            });
+
+
+
+
+        }
+        else if (2 == selectedVal) {
+            $.ajax({
+                type: "POST",
+                url: "/citylistbydis",
+                data: {
+                    id: disid
+                },
+                async: false,
+                success: function (response) {
+                    data = response;
+                    return response;
+                },
+                error: function () {
+
+                    var select = $('#citydropdown');
+                    select.empty();
+                    select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));;
+                }
+            });
+
+            $('#upacitygroup').show();
+            $('#citydropdown').show();
+            $('#upazilladropdown').hide();
+
+            $('#wardhide').show();
+            h.hide();
+
+
+            var lebel = $('#uplebel');
+
+
+            lebel.empty();
+            lebel.append().html(" সিটি কর্পোরেশন নির্বাচন")
+
+            var unimuni = $('#uniminiward')
+            unimuni.empty();
+
+
+            var unimunilebel = $('#unimunilebel')
+
+            unimunilebel.empty()
+            unimunilebel.append('Select One');
+//                var radio=$('<input/>').attr({
+//                    type: 'radio', name: 'Union', value: '1', id: 'union'
+//                });
+//                unimuni.append(radio);
+//                unimuni.append(' Ward ')
+            var select = $('#citydropdown');
+            select.empty();
+            select.append($('<option></option>').val(-1).html('...'));
+            $.each(data, function (index, value) {
+                select.append(
+                    $('<option></option>').val(value.id).html(value.nameBng).attr('bbs', value.bbsCode)
+                );
+            });
+
+
+        }
+
+    }
+
+    $('#upacity').change(function () {
+        dis();
+    });
+
+    $('#districtdropdown').change(function () {
+
+        dis();
+
+    });
+
+
+    function union() {
+
+        var selectedValu = $("#uniminiward input:radio:checked").val();
+        var iscity = $('#upacity input:radio:checked').val();
+
+        var disid = $('#upazilladropdown').val();
+        var citid=$('#citydropdown').val();
+
+        if (1 == iscity) {
+
+
+            if (1 == selectedValu) {
+                var data = "";
+                $.ajax({
+                    type: "POST",
+                    url: "/getunionlistbyupazillaid",
+                    data: {
+                        id: disid
+                    },
+                    async: false,
+                    success: function (response) {
+                        data = response;
+                        return response;
+                    },
+                    error: function () {
+                        var select = $('#uniondropdown');
+                        select.empty();
+                        select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+                    }
+                });
+
+                $('#unionmunidiv').show();
+
+                $('#wardhide').hide();
+                $('#municipalitydropdown').hide();
+                $('#uniondropdown').show();
+
+                var select = $('#uniondropdown');
+                select.empty();
+                select.append($('<option></option>').val(-1).html('...'));
+                $.each(data, function (index, value) {
+                    select.append(
+                        $('<option></option>').val(value.id).html(value.unionNameBng).attr('bbs', value.bbsCode)
+                    );
+                });
+                var selected = $(this).find('option:selected');
+                var extra = selected.data('bbs');
+                $('input[name = districtbbscode]').val(extra);
+
+            }
+            else if (2 == selectedValu) {
+                var data = "";
+                $.ajax({
+                    type: "POST",
+                    url: "/municipalitylistbyupazillaid",
+                    data: {
+                        id: disid
+                    },
+                    async: false,
+                    success: function (response) {
+                        data = response;
+                        return response;
+                    },
+                    error: function () {
+                        var select = $('#uniondropdown');
+                        select.empty();
+                        select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+                    }
+                });
+
+                $('#unionmunidiv').show();
+
+                $('#wardhide').show();
+                $('#municipalitydropdown').show();
+                $('#uniondropdown').hide();
+
+                var select = $('#municipalitydropdown');
+                select.empty();
+                select.append($('<option></option>').val(-1).html('...'));
+                $.each(data, function (index, value) {
+                    select.append(
+                        $('<option></option>').val(value.id).html(value.municipalityNameBng).attr('bbs', value.bbsCode)
+                    );
+                });
+                var selected = $(this).find('option:selected');
+                var extra = selected.data('bbs');
+                $('input[name = districtbbscode]').val(extra);
+            }
+
+
+
+        }
+        else if (2==iscity){
+
+
+            var data = "";
+            $.ajax({
+                type: "POST",
+                url: "/wardlistbyid",
+                data: {
+                    id: citid
+                },
+                async: false,
+                success: function (response) {
+                    data = response;
+                    return response;
+                },
+                error: function () {
+                    var select = $('#citywarddropdown');
+                    select.empty();
+                    select.append($('<option></option>').val(-1).html('পাওয়া যায়নি'));
+                }
+            });
+            $('#muniwarddropdown').hide();
+
+            $('#citywarddropdown').show();
+
+            $('#wardhide').show();
+            var select = $('#citywarddropdown');
+            select.empty();
+            select.append($('<option></option>').val(-1).html('...'));
+            $.each(data, function (index, value) {
+                select.append(
+                    $('<option></option>').val(value.id).html(value.nameBng).attr('bbs', value.bbsCode)
+                );
+            });
+            var selected = $(this).find('option:selected');
+            var extra = selected.data('bbs');
+            $('input[name = districtbbscode]').val(extra);
+        }
+
+    }
+
+
+    $('#uniminiward').change(function () {
+
+        union();
+
+    });
+
+
+    $('#upazilladropdown').change(function () {
+
+
+        union();
+
+    });
+    $('#citydropdown').change(function () {
+
+
+        union();
+
+    });
+
+    $('#municipalitydropdown').change(function () {
+
+        var selectedValues = $("#uniminiward input:radio:checked").val();
+
+        //var disid = $('#this').val();
+        if (2 == selectedValues) {
+            var data = "";
+            $.ajax({
+                type: "POST",
+                url: "/municipalitywardlistbymunicipalityid",
+                data: {
+                    id: $(this).val()
+                },
+                async: false,
+                success: function (response) {
+                    data = response;
+                    return response;
+                },
+                error: function () {
+                    var select = $('#muniwarddropdown');
+                    select.empty();
+                    select.append($('<option></option>').val(-1).html('পাওয়া যায়নিl'));
+                }
+            });
+
+            $('#muniwarddropdown').show();
+            $('#citywarddropdown').hide();
+
+            var select = $('#muniwarddropdown');
+            select.empty();
+            select.append($('<option></option>').val(-1).html('...'));
+            $.each(data, function (index, value) {
+                select.append(
+                    $('<option></option>').val(value.id).html(value.wardNameBng).attr('bbs', value.bbsCode)
+                );
+            });
+            var selected = $(this).find('option:selected');
+            var extra = selected.data('bbs');
+            $('input[name = districtbbscode]').val(extra);
+        } else {
+            $('#muniwarddropdown').hide();
+        }
+
+    });
+
+
+});
